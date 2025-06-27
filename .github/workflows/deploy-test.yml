@@ -5,18 +5,16 @@ on:
     branches:
       - main
       - 'feature/**'
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
-    inputs:
-      branch:
-        description: "Branch to deploy"
-        required: true
-        default: main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      BRANCH_NAME: ${{ github.event.inputs.branch || github.head_ref || github.ref_name }}
+      BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
     steps:
       - name: Set up SSH agent
         uses: webfactory/ssh-agent@v0.7.0
